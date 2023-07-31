@@ -54,7 +54,9 @@
 import { reactive, onMounted, toRefs } from "vue";
 import { notification } from "ant-design-vue";
 import { isUsersLogin } from "@/service";
-
+import { useRouter } from "vue-router";
+// import router from "@/router";
+const $router = useRouter();
 // 定义向父组件发送的自定义事件
 const emits = defineEmits(["update"]);
 const updateParentValuess = () => {
@@ -204,6 +206,7 @@ const { run: isrun } = useRequest(
         type: "success",
         message: `账号登录成功`,
       });
+      $router.push("/ProjectView");
     },
     // 请求失败时
     onError: () => {
