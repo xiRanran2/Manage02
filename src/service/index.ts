@@ -43,6 +43,17 @@ export const isUsersLogin = async (data: {
   username: string;
 }) => (await http.post<IBaseResponse>("/api/v1/users/login", data)).data.code;
 
+//获取头部的用户信息
+export const getUserInfoData = async (params: {
+  username: string;
+  email: string;
+  avatar: string;
+}) =>
+  (
+    await http.get<getMemberData>("api/v1/users/user_info", {
+      params,
+    })
+  ).data;
 // 首页导航项目请求数据
 export const getProjectsData = async (params: {
   collection: number;

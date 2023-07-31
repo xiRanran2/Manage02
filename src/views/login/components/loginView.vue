@@ -93,7 +93,9 @@
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
 import { isUserExists } from "@/service";
-
+// import { useRouter } from "vue-router";
+// // import router from "@/router";
+// const $router = useRouter();
 // 登录
 const formState = reactive({
   username: "",
@@ -108,8 +110,15 @@ const emits = defineEmits(["update"]);
 // 点击按钮时触发的方法  触发父组件的自定义事件，将新值传递给父组件
 const updateParentValue = () => emits("update", "registerView");
 const updateParentValueS = () => emits("update", "forgotPasswordView");
-const updateParentValuee = () =>
+const updateParentValuee = () => {
   emits("update", "loginView", true, formState.username, formState.password);
+};
+// if (updateParentValuee:()=>true) {
+//   $router.push("/ProjectView");
+// }
+
+// console.log(updateParentValuee);
+// if()
 
 // 验证用户名的异步函数
 const validateUser = async (_rule: Rule, value: string) => {
@@ -129,7 +138,7 @@ const validateUser = async (_rule: Rule, value: string) => {
     return Promise.reject("用户名不存在");
   }
   isboolean.value = res1;
-  console.log(isboolean.value);
+  // console.log(isboolean.value);
 
   // 请求成功，用户名不存在
   return Promise.resolve();
@@ -161,6 +170,13 @@ const disabled = computed(() => {
   }
   return true;
 });
+watchEffect(() => {
+  // if (disabled.value === false) {
+  //   // $router.push("/ProjectView");
+  // }
+});
+console.log(disabled);
+console.log(123454321);
 </script>
 
 <style lang="scss">
