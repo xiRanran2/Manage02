@@ -129,7 +129,7 @@
         <a-button type="text"
           ><img
             class="rounded-[50%] w-[32px] h-[32px] mr-[9px]"
-            src="	https://fastly.picsum.photos/id/800/100/100.jpg?hmac=1ZFk6tFMaH90_tNhZgiL5zsGttEKB4cKQCUXQKDm6kc"
+            :src="getdata?.avatar"
           />
           <span class="text-[20px]">xrr</span></a-button
         >
@@ -138,6 +138,7 @@
   </header>
 </template>
 <script lang="ts" setup>
+import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import type { MenuProps } from "ant-design-vue";
 const activeKey = ref("1");
@@ -184,6 +185,21 @@ const onTabChange = (value: string, type: string) => {
 const handleClick: MenuProps["onClick"] = (menuInfo) => {
   console.log("click ", menuInfo);
 };
+const { data: getdata } = useRequest(
+  () =>
+    getUserInfoData({
+      username: "",
+      email: "",
+      avatar: "",
+    }),
+  {
+    // 请求成功时
+    onSuccess: () => {
+      const UserInfoData = getdata.value;
+      console.log(UserInfoData);
+    },
+  }
+);
 </script>
 <style>
 .ant-tabs-tab {

@@ -1,6 +1,6 @@
 <template>
   <div class="w-[100%] h-[790px] p-[20px] rounded-[2px] bg-[#fff]">
-    <header class="relative">
+    <div class="relative">
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="全部项目"></a-tab-pane>
         <a-tab-pane key="2" tab="我的收藏" force-render></a-tab-pane>
@@ -17,7 +17,7 @@
           >
         </p></a-button
       >
-    </header>
+    </div>
     <!-- 列表 -->
     <ul class="">
       <li
@@ -139,7 +139,10 @@ const { data: getdata } = useRequest(
   }
 );
 </script>
-<style scoped>
+<style>
+.ant-tabs-tab {
+  font-size: 18px;
+}
 .active .ant-tabs-tab-active {
   border: none;
 }

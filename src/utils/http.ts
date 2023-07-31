@@ -23,8 +23,17 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (option) => {
     const url2Handler: Record<string, () => unknown> = {
-      "/api/v1/user/login": () => store.set("arco_auth", option.data.data),
+      "http://192.168.122.36:1024/api/v1/user/login": () =>
+        store.set("arco_auth", option.data.data),
     };
+    if (
+      option.request.responseURL ===
+      "http://192.168.122.36:1024/api/v1/users/login"
+    ) {
+      store.set("arco_auth", option.data.data);
+    }
+    // console.log(option);
+
     url2Handler[option.config.url ?? ""]?.();
     return option;
   },
