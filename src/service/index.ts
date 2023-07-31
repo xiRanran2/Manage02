@@ -42,3 +42,14 @@ export const isUsersLogin = async (data: {
   password: string;
   username: string;
 }) => (await http.post<IBaseResponse>("/api/v1/users/login", data)).data.code;
+
+// 首页导航项目请求数据
+export const getProjectsData = async (params: {
+  collection: number;
+  is_recycle: number;
+}) =>
+  (
+    await http.get<getProjectData>("api/v1/projects/list", {
+      params,
+    })
+  ).data;
