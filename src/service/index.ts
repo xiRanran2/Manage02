@@ -44,18 +44,33 @@ export const isUsersLogin = async (data: {
 }) => (await http.post<IBaseResponse>("/api/v1/users/login", data)).data.code;
 
 //获取头部的用户信息
-export const getUserInfoData = async (params: {
-  username: string;
-  email: string;
-  avatar: string;
+export const getUserInfoData = async () =>
+  (await http.get<IBaseResponse<getMemberData>>("api/v1/users/user_info")).data
+    .data;
+// 首页导航项目请求数据
+export const getProjectsData = async (params: {
+  collection: number;
+  is_recycle: number;
 }) =>
   (
-    await http.get<getMemberData>("api/v1/users/user_info", {
+    await http.get<getProjectData>("api/v1/projects/list", {
       params,
     })
   ).data;
-// 首页导航项目请求数据
-export const getProjectsData = async (params: {
+
+//已归档项目
+export const getFileProject = async (params: {
+  collection: number;
+  is_archived: number;
+}) =>
+  (
+    await http.get<getProjectData>("api/v1/projects/list", {
+      params,
+    })
+  ).data;
+
+//回收站
+export const getRecyleProject = async (params: {
   collection: number;
   is_recycle: number;
 }) =>

@@ -14,6 +14,10 @@ const routes: Array<RouteRecordRaw> = [
     path: "/ProjectView",
     component: () => import("@/views/Project/ProjectView.vue"),
   },
+  {
+    path: "/PersonalView",
+    component: () => import("@/views/Project/PersonalView.vue"),
+  },
 ];
 
 const router = createRouter({

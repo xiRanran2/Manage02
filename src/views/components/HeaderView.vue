@@ -31,7 +31,7 @@
       <a-tabs v-model:activeKey="activeKey" style="height: 65px">
         <a-tab-pane key="1">
           <template #tab
-            ><span class="flex justify-center items-center text-[19px]"
+            ><span class="flex justify-center items-center text-[16px]"
               ><Icon
                 icon="icon-park-outline:new-computer"
                 class="mr-[5px]"
@@ -129,9 +129,9 @@
         <a-button type="text"
           ><img
             class="rounded-[50%] w-[32px] h-[32px] mr-[9px]"
-            :src="getdata?.avatar"
+            :src="userData?.avatar"
           />
-          <span class="text-[20px]">xrr</span></a-button
+          <span class="text-[20px]">{{ userData?.username }}</span></a-button
         >
       </a-popover>
     </div>
@@ -185,21 +185,7 @@ const onTabChange = (value: string, type: string) => {
 const handleClick: MenuProps["onClick"] = (menuInfo) => {
   console.log("click ", menuInfo);
 };
-const { data: getdata } = useRequest(
-  () =>
-    getUserInfoData({
-      username: "",
-      email: "",
-      avatar: "",
-    }),
-  {
-    // 请求成功时
-    onSuccess: () => {
-      const UserInfoData = getdata.value;
-      console.log(UserInfoData);
-    },
-  }
-);
+const { data: userData } = useRequest(() => getUserInfoData(), {});
 </script>
 <style>
 .ant-tabs-tab {
