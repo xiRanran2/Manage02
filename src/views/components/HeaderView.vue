@@ -31,7 +31,7 @@
       <a-tabs v-model:activeKey="activeKey" style="height: 65px">
         <a-tab-pane key="1">
           <template #tab
-            ><span class="flex justify-center items-center text-[19px]"
+            ><span class="flex justify-center items-center text-[16px]"
               ><Icon
                 icon="icon-park-outline:new-computer"
                 class="mr-[5px]"
@@ -41,18 +41,15 @@
         >
         <a-tab-pane key="2" force-render>
           <template #tab
-            ><span class="flex justify-center items-center text-[19px]"
+            ><span class="flex justify-center items-center text-[16px]"
               ><Icon icon="solar:chart-bold" />项目</span
             ></template
           >
         </a-tab-pane>
         <a-tab-pane key="3">
           <template #tab
-            ><span class="flex justify-center items-center text-[19px]"
-              ><Icon
-                icon="icon-park-outline:new-computer"
-                class="mr-[5px]"
-              />部门</span
+            ><span class="flex justify-center items-center text-[16px]"
+              ><Icon icon="ic:round-person" class="mr-[5px]" />部门</span
             ></template
           ></a-tab-pane
         >
@@ -129,9 +126,9 @@
         <a-button type="text"
           ><img
             class="rounded-[50%] w-[32px] h-[32px] mr-[9px]"
-            :src="getdata?.avatar"
+            :src="userData?.avatar"
           />
-          <span class="text-[20px]">xrr</span></a-button
+          <span class="text-[20px]">{{ userData?.username }}</span></a-button
         >
       </a-popover>
     </div>
@@ -141,9 +138,9 @@
 import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import type { MenuProps } from "ant-design-vue";
+import { useRouter } from "vue-router";
+const $router = useRouter();
 const activeKey = ref("1");
-const selectedKeys = ref([]);
-const openKeys = ref([]);
 const tabListNoTitle = [
   {
     key: "@我",
@@ -158,6 +155,14 @@ const tabListNoTitle = [
     tab: "私信",
   },
 ];
+interface MenuItem {
+  key: string;
+  icon: () => unknown;
+  label: string;
+  title: string;
+}
+const openKeys = ref([]);
+const selectedKeys = ref([]);
 const items = ref([
   {
     key: "1",
@@ -182,24 +187,14 @@ const onTabChange = (value: string, type: string) => {
     noTitleKey.value = value;
   }
 };
-const handleClick: MenuProps["onClick"] = (menuInfo) => {
-  console.log("click ", menuInfo);
-};
-const { data: getdata } = useRequest(
-  () =>
-    getUserInfoData({
-      username: "",
-      email: "",
-      avatar: "",
-    }),
-  {
-    // 请求成功时
-    onSuccess: () => {
-      const UserInfoData = getdata.value;
-      console.log(UserInfoData);
-    },
+const handleClick = ({ key }: MenuItem) => {
+  if (key === "1") {
+    $router.push("/PersonalView");
+  } else if (key === "2") {
+    $router.push("/LoginView");
   }
-);
+};
+const { data: userData } = useRequest(() => getUserInfoData(), {});
 </script>
 <style>
 .ant-tabs-tab {

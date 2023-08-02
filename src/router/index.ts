@@ -1,5 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import LoginView from "@/views/login/LoginView.vue";
+// const route: RouteRecordRaw[] = [
+//   {
+//     path: "/",
+//     name: "home",
+//     component: LoginView,
+//   },
+// ];
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
@@ -15,8 +22,12 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/Project/ProjectView.vue"),
   },
   {
-    path: "/Staging",
-    component: () => import("@/views/Staging/StagingView.vue"),
+    path: "/PersonalView",
+    component: () => import("@/views/Project/PersonalView.vue"),
+  },
+  {
+    path: "/ProjectTemplate",
+    component: () => import("@/views/Project/ProjectTemplate.vue"),
   },
 ];
 

@@ -1,9 +1,20 @@
 <template>
   <!-- 侧边栏 -->
-  <a-layout style="min-height: 100vh; box-shadow: 0 0 10px #ccc">
-    <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+  <a-layout
+    style="
+      min-height: 94vh;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 80px;
+      min-width: 80px;
+      width: 80px;
+    "
+  >
+    <a-layout-sider
+      v-model:collapsed="collapsed"
+      collapsible
+      style="background-color: white"
+    >
+      <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
         <a-sub-menu key="sub1">
           <template #title>
             <span class="flex justify-center items-center">
@@ -55,20 +66,6 @@
         </a-sub-menu>
       </a-menu>
     </a-layout-sider>
-    <!-- <a-layout>
-      <a-layout-header style="background: #fff; padding: 0" />
-      <a-layout-content style="margin: 0 16px">
-        <a-breadcrumb style="margin: 16px 0">
-          <a-breadcrumb-item>User</a-breadcrumb-item>
-          <a-breadcrumb-item>Bill</a-breadcrumb-item>
-        </a-breadcrumb>
-        <div
-          :style="{ padding: '24px', background: '#fff', minHeight: '360px' }"
-        >
-          Bill is a cat.
-        </div>
-      </a-layout-content>
-    </a-layout> -->
   </a-layout>
 </template>
 <script lang="ts" setup>
@@ -77,11 +74,4 @@ import { ref } from "vue";
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(["1"]);
 </script>
-<style>
-.ant-layout-sider-children,
-.ant-menu-inline,
-.ant-menu-dark {
-  color: #000;
-  background-color: #fff !important;
-}
-</style>
+<style></style>
