@@ -42,7 +42,7 @@
       <img
         :src="userData?.avatar"
         alt=""
-        class="h-[239px] w-[239px] rounded-[50%] absolute top-5 right-5"
+        class="h-[239px] w-[239px] rounded-[50%] absolute top-[23px] right-[110px]"
       />
     </div>
     <!-- 对话框 -->

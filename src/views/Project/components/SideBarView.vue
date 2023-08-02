@@ -9,9 +9,12 @@
       width: 80px;
     "
   >
-    <a-layout-sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
-      <a-menu v-model:selectedKeys="selectedKeys" theme="dark" mode="inline">
+    <a-layout-sider
+      v-model:collapsed="collapsed"
+      collapsible
+      style="background-color: white"
+    >
+      <a-menu v-model:selectedKeys="selectedKeys" mode="inline">
         <a-sub-menu key="sub1">
           <template #title>
             <span class="flex justify-center items-center">
@@ -71,11 +74,4 @@ import { ref } from "vue";
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(["1"]);
 </script>
-<style>
-.ant-layout-sider-children,
-.ant-menu-inline,
-.ant-menu-dark {
-  color: #000;
-  background-color: #fff !important;
-}
-</style>
+<style></style>

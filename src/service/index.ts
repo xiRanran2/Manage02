@@ -1,5 +1,10 @@
 import http from "@/utils/http";
 
+//获取menu
+//获取头部的用户信息
+export const getMenuData = async () =>
+  (await http.get<IBaseResponse<getMemberData>>("/api/v1/menus/user_menus"))
+    .data;
 // 用户名 | 邮箱
 export const isUserExists = async (
   params: { username: string } | { email: string }
@@ -9,6 +14,9 @@ export const isUserExists = async (
       params,
     })
   ).data.code;
+
+//获取头部导航栏
+// export const Nav
 
 // 发送验证码
 export const sendVerificationCodes = async (data: {
@@ -56,7 +64,7 @@ export const getProjectsData = async (params: {
     await http.get<getProjectData>("api/v1/projects/list", {
       params,
     })
-  ).data;
+  ).data.data.rows;
 
 //已归档项目
 export const getFileProject = async (params: {
