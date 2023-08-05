@@ -137,7 +137,6 @@
 <script lang="ts" setup>
 import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
-import type { MenuProps } from "ant-design-vue";
 import { useRouter } from "vue-router";
 const $router = useRouter();
 const activeKey = ref("1");
@@ -189,9 +188,9 @@ const onTabChange = (value: string, type: string) => {
 };
 const handleClick = ({ key }: MenuItem) => {
   if (key === "1") {
-    $router.push("/PersonalView");
+    $router.push("/personalCenter/personalCenter");
   } else if (key === "2") {
-    $router.push("/LoginView");
+    $router.push("/login");
   }
 };
 const { data: userData } = useRequest(() => getUserInfoData(), {});

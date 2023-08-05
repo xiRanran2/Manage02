@@ -222,7 +222,12 @@
           <a-breadcrumb-item>Bill</a-breadcrumb-item>
         </a-breadcrumb>
         <div :style="{ background: '#fff', minHeight: '360px' }">
+          <!-- 项目列表 -->
           <ProjectList></ProjectList>
+          <!-- 项目模板 -->
+          <!-- <ProjectTemplate></ProjectTemplate> -->
+          <!-- 消息提醒 -->
+          <!-- <mention></mention> -->
         </div>
       </a-layout-content>
     </a-layout>
@@ -230,6 +235,8 @@
 </template>
 <script lang="ts" setup>
 import ProjectList from "./components/ProjectList.vue";
+import ProjectTemplate from "./components/ProjectTemplate.vue";
+import mention from "./message/mentionView.vue";
 import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";

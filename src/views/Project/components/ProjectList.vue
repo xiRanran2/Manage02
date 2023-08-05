@@ -402,7 +402,7 @@ const { data: getRecyleData } = useRequest(
 );
 //回收站
 const RecyleReverseData = computed(() => {
-  return getRecyleData.value?.data.rows.reverse();
+  return getRecyleData.value?.reverse();
 });
 const RecyleData = computed(() => {
   const startIndex = (current.value - 1) * numberPerPage;

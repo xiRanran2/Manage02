@@ -1,7 +1,8 @@
 <template>
   <div class="w-screen h-screen bg">
-    <!-- logo开始 -->
-    <div class="flex items-center fixed top-[24px] left-[22px] z-10">
+    <div
+      class="flex items-center fixed top-[24px] left-[22px] z-10 scale-[0.8]"
+    >
       <svg
         viewBox="0 0 24 24"
         fill="none"
@@ -26,94 +27,41 @@
       </svg>
       <span class="text-[24px] font-bold text-[#303133]">Arco</span>
     </div>
-    <!-- logo结束 -->
-
-    <!-- 注册、登录 开始 -->
-    <div
-      class="fixed top-[40%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[320px]"
-    >
-      <!-- 登录 开始 -->
-      <loginView
-        v-if="isSwitch === 'loginView'"
-        @update="handleUpdate"
-      ></loginView>
-      <!-- 登录 结束 -->
-
-      <!-- 注册 开始 -->
-      <registerView
-        v-if="isSwitch === 'registerView'"
-        @update="handleUpdate"
-      ></registerView>
-      <!-- 注册 结束 -->
-
-      <!-- 找回密码 开始-->
-      <forgotPasswordView
-        v-if="isSwitch === 'forgotPasswordView'"
-        @update="handleUpdate"
-      ></forgotPasswordView>
-      <!-- 找回密码 结束-->
-    </div>
-    <!-- 注册、登录 结束 -->
-
-    <!-- 滑动验证 -->
-    <div
-      class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
-    >
-      <imgCheck
-        v-if="toggle"
-        @update="handleUpdate"
-        :propValue="usernamesong"
-        :propPassword="passwordsong"
-      />
-    </div>
-
-    <!-- 滑动验证结束 -->
-
-    <!-- 底部信息开始 -->
-    <div
-      class="fixed bottom-0 w-screen flex items-center justify-center h-[48px] text-[#999] text-[16px]"
-    >
-      <Icon
-        icon="ic:baseline-copyright"
-        class="text-[#999] text-[20px] mr-[5px]"
-      />
-      2021 HOPU | 鄂ICP备29218126号-1
-    </div>
-    <!-- 底部信息结束 -->
+    <RegisterView v-if="isSwitch === 'registerView'" @update="handleUpdate" />
+    <loginView v-if="isSwitch === 'loginView'" @update="handleUpdate" />
+    <ForgotPasswordView
+      v-if="isSwitch === 'forgotPasswordView'"
+      @update="handleUpdate"
+    />
   </div>
 </template>
-
-<script lang="ts" setup>
-// 自动为您完成了组件的配置和导入，并使得在模板中使用组件变得更加简单
-import loginView from "./components/loginView.vue";
-import registerView from "./components/registerView.vue";
-import forgotPasswordView from "./components/forgotPasswordView.vue";
-import imgCheck from "./components/imgCheck.vue";
-
+<script setup lang="ts">
+import RegisterView from "@/views/Login/components/RegisterView.vue";
+import loginView from "@/views/Login/components/loginView.vue";
+import ForgotPasswordView from "@/views/Login/components/forgotPasswordView.vue";
 // 切换选项卡
 let isSwitch = ref<"loginView" | "registerView" | "forgotPasswordView">(
   "loginView"
 );
 let toggle = ref(false);
 
-let usernamesong = ref("");
-let passwordsong = ref("");
+let userNameSong = ref("");
+let passWordSong = ref("");
 
 // 在监听回调中更新父组件的值
 const handleUpdate = (
   newValue: "loginView" | "registerView" | "forgotPasswordView",
   isBoolean: boolean,
-  usernameparent: string,
-  passwordparent: string
+  userNameParent: string,
+  passWordParent: string
 ) => {
   isSwitch.value = newValue;
   toggle.value = isBoolean;
-  usernamesong.value = usernameparent;
-  passwordsong.value = passwordparent;
+  userNameSong.value = userNameParent;
+  passWordSong.value = passWordParent;
 };
 </script>
-
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .bg {
   background: #f5f5f5;
   background-image: url(https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg);
