@@ -35,6 +35,7 @@
     />
   </div>
 </template>
+<!-- 修改登录页的文件夹 -->
 <script setup lang="ts">
 import RegisterView from "@/views/Login/components/registerView.vue";
 import loginView from "@/views/Login/components/loginView.vue";
