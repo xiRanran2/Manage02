@@ -18,11 +18,20 @@
           <span>{{ inviteData?.data.actor.username }}</span
           ><span class="text-[#9393a1] ml-[5px]">邀请你加入项目</span>
         </p>
-        <p class="font-[800]">shunxi</p>
+        <div
+          class="font-[800]"
+          v-for="item in PersonalMessage?.rows"
+          :key="item.id"
+        >
+          <span
+            v-if="href2 === item.url.substring(item.url.lastIndexOf('/') + 1)"
+            v-html="item.content.substring(7)"
+          ></span>
+        </div>
         <a-button
           type="primary"
           style="background-color: #b3e19d"
-          class="text-center w-[100%]"
+          class="text-center w-[100%] mt-[8px]"
           disabled
           >已加入</a-button
         >
@@ -44,7 +53,7 @@ const { data: inviteData } = useRequest(
   {
     // 请求成功时
     onSuccess: () => {
-      console.log(inviteData.value);
+      console.log(inviteData.value?.data.uuid);
     },
   }
 );

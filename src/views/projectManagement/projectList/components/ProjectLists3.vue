@@ -13,7 +13,7 @@
         />
         <div class="flex flex-col ml-[5px] items-start">
           <div>
-            <a href="">{{ item.name }}</a>
+            <a @click="saveLiId(item)">{{ item.name }}</a>
             <span
               class="ml-[5px] text-[10px] bg-[#f0f9eb] text-[#67c23a] px-[5px] py-[2px]"
               >公开</span
@@ -105,6 +105,14 @@ const time: any = computed(() => {
     return item.created_at.slice(0, 10);
   });
 });
+//点击li跳转路由  保存li的id
+import router from "@/router";
+const datas = ref();
+const saveLiId = (id: object) => {
+  datas.value = id;
+  console.log(datas.value.id); //获取的是点击的那个li 再打印里面的id
+  router.push(`/projectManagement/Project/${datas.value.id}`);
+};
 </script>
 <style>
 .ant-tabs-tab {

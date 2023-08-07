@@ -51,14 +51,13 @@
         :key="item.id"
         class="w-[100%] border-b-[1px] border-[#eceaea] py-[23px] flex items-center justify-between pl-[8px] text-[14px] pr-[20px] text-[#606266]"
       >
-        <div class="pl-[20px] flex items-center">
+        <div class="pl-[20px] flex items-center spanStyle">
           <img
             :src="item.actor.avatar"
             class="w-[32px] h-[32px] rounded-[50%]"
           />
           <span class="ml-[9px]">{{ item.actor.username }}</span>
-          <span class="mr-[7px]">{{ item.content.slice(0, 8) }}</span>
-          <a-button type="link">{{ item.content.slice(35, 41) }}</a-button>
+          <a-button type="link" v-html="item.content"></a-button>
         </div>
         <div class="flex items-center">
           <div class="mr-[124px]">{{ item.created_at }}</div>
@@ -98,3 +97,11 @@ const { data: PersonalMessage } = useRequest(
 );
 //传参
 </script>
+<style>
+.spanStyle .ant-btn-link {
+  color: #000;
+}
+.spanStyle .ant-btn-link .project-name {
+  color: rgb(104, 157, 244);
+}
+</style>
