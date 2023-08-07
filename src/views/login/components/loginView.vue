@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div
+    class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[320px]"
+  >
     <div class="flex flex-col items-start">
       <div class="text-[24px] leading-[32px] text-[#1d2129] font-bold-500">
         登录 Arco
@@ -12,7 +14,7 @@
       :model="formState"
       :rules="rules"
       name="normal_login"
-      class="login-form mt-[20px]"
+      class="login-form"
     >
       <a-form-item label="" name="username" class="leading-[50px] w-[320px]">
         <a-input
@@ -74,7 +76,7 @@
           type="primary"
           html-type="submit"
           finish
-          @click="updateParentValuee"
+          @click="updateParentValue2"
           class="login-form-button w-[320px] h-[40px] bg-[#409EFF]"
         >
           登录
@@ -88,11 +90,26 @@
       </div>
     </a-form>
   </div>
+  <Vcode :show="isShow" @success="onSuccess" />
 </template>
 
 <script lang="ts" setup>
 import type { Rule } from "ant-design-vue/es/form";
-import { isUserExists } from "@/service";
+import { isUserExists, isUsersLogin } from "@/service";
+import Vcode from "vue3-puzzle-vcode";
+import { notification } from "ant-design-vue";
+import { useRequest } from "vue-request";
+import { GetUserMenus } from "@/service";
+import getCurrentTimePeriod from "@/hooks/useGetCurrentTimePeriod";
+import store from "storejs";
+const isShow = ref(false); // 验证框
+const router = useRouter();
+
+//滑块成功触发事件
+const onSuccess = () => {
+  isShow.value = false;
+  LoginJudgment();
+};
 
 // 登录
 const formState = reactive({
@@ -100,47 +117,43 @@ const formState = reactive({
   password: "",
   remember: true,
 });
-const isboolean = ref<number>(404);
+const isBoolean = ref<number>(404);
 
 // 定义向父组件发送的自定义事件
 const emits = defineEmits(["update"]);
 
 // 点击按钮时触发的方法  触发父组件的自定义事件，将新值传递给父组件
+//注册
 const updateParentValue = () => emits("update", "registerView");
+//忘记密码
 const updateParentValueS = () => emits("update", "forgotPasswordView");
-const updateParentValuee = () =>
+const updateParentValue2 = () => {
   emits("update", "loginView", true, formState.username, formState.password);
+  isShow.value = true;
+};
 
 // 验证用户名的异步函数
 const validateUser = async (_rule: Rule, value: string) => {
-  if (value === "") {
-    return Promise.reject("请输入用户名");
-  }
+  if (value === "") return Promise.reject("请输入用户名");
+
   // 使用正则表达式检查用户名长度在2到20个字符之间
   const usernameRegex = /^.{2,20}$/;
-  if (!usernameRegex.test(value)) {
+  if (!usernameRegex.test(value))
     return Promise.reject("用户名长度应在2到20个字符之间");
-  }
 
   // 验证用户名是否已存在
-  const res1 = await isUserExists({ username: value });
-  if (res1 === 404) {
-    isboolean.value = res1;
+  const res = await isUserExists({ username: value });
+  if (res === 404) {
+    isBoolean.value = res;
     return Promise.reject("用户名不存在");
   }
-  isboolean.value = res1;
-  console.log(isboolean.value);
-
+  isBoolean.value = res;
   // 请求成功，用户名不存在
   return Promise.resolve();
 };
 // 验证密码的异步函数
 let validatePass = async (_rule: Rule, value: string) => {
-  if (value.length < 6) {
-    return Promise.reject("密码不少于6位");
-  } else {
-    return Promise.resolve();
-  }
+  return value.length < 6 ? Promise.reject("密码不少于6位") : Promise.resolve();
 };
 // 定义表单规则，包含每个字段的验证规则
 const rules: Record<string, Rule[]> = {
@@ -149,21 +162,40 @@ const rules: Record<string, Rule[]> = {
   // 密码
   password: [{ required: true, validator: validatePass, trigger: "blur" }],
 };
-// console.log(rules);
 const disabled = computed(() => {
-  if (
+  return !(
     formState.username != "" &&
     formState.password != "" &&
     formState.password.length >= 6 &&
-    isboolean.value != 404
-  ) {
-    return false;
-  }
-  return true;
+    isBoolean.value != 404
+  );
 });
+
+//登录
+const { run: LoginJudgment } = useRequest(
+  () =>
+    isUsersLogin({
+      username: formState.username,
+      password: formState.password,
+    }),
+  {
+    manual: true,
+    // 请求成功时
+    onSuccess: () => {
+      notification.success({
+        message: `${getCurrentTimePeriod()}好`,
+        description: "欢迎登录Arco",
+      });
+      GetUserMenus().then((data) => {
+        store.set("menus", data);
+        router.push("/index");
+      });
+    },
+  }
+);
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .ant-form-item-explain-error {
   display: flex;
 }

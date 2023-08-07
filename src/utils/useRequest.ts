@@ -1,40 +1,13 @@
-// import { ref } from "vue";
-// function useRequest<T = any, U = any>(
-//   requestHandler: (...rest: any[]) => Promise<T>,
-//   config?: {
-//     transform: (data: T) => U;
-//   }
-// ) {
-//   const result = ref<T>();
-//   const loading = ref(true);
-//   const error = ref(false);
-//   requestHandler()
-//       .then((res) => {
-//           if (config?.transform) {
-//               result.value = config.transform(res);
-//           } else {
-//               result.value = res;
-//         }
-//     })
-//     .catch((err) => (error.value = err))
-//     .finally(() => {
-//       loading.value = false;
-//     });
-//   return [result, loading, error];
-// }
-// export default useRequest;
-//类似于useRequest函数 借助于若干个组合式API封装好一个指定的逻辑 (自定义hook)
-//一定要以use开头 (vueuse)
-//Promise
-//() => Promise
-//()=> () => Promise()
 import { ref, Ref } from "vue";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function useRequest<T>(service: (...rest: any[]) => Promise<T>): {
   data: Ref<T>;
   loading: Ref<boolean>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: Ref<any>;
 };
 function useRequest<T, U>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   service: (...rest: any[]) => Promise<T>,
   options: {
     formateResult: (data: T) => U;
@@ -42,9 +15,11 @@ function useRequest<T, U>(
 ): {
   data: Ref<T>;
   loading: Ref<boolean>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   error: Ref<any>;
 };
 function useRequest<T, U>(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   service: (...rest: any[]) => Promise<T>,
   options?: {
     formateResult: (data: T) => U;
@@ -62,6 +37,7 @@ function useRequest<T, U>(
       }
     })
     .catch((error) => console.log(error))
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
     .finally(() => {});
   return { data, loading, error };
 }
