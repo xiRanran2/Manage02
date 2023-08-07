@@ -44,7 +44,6 @@ import { FetchInviteData, getPersonalMessage } from "@/service";
 const href2 = ref(
   window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
 );
-const params = ref();
 //传参
 const { data: inviteData } = useRequest(
   () =>

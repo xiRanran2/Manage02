@@ -13,7 +13,7 @@
         />
         <div class="flex flex-col ml-[5px] items-start">
           <div>
-            <a href="">{{ item.name }}</a>
+            <a @click="saveLiId(item)">{{ item.name }}</a>
             <span
               class="ml-[5px] text-[10px] bg-[#f0f9eb] text-[#67c23a] px-[5px] py-[2px]"
               >公开</span
@@ -35,7 +35,7 @@
       <!-- 进度条 -->
       <div class="flex flex-col items-start w-[300px] text-[#a3a3a3] ml-[30px]">
         <span>进度</span>
-        <a-progress :percent="item.progress" status="active" />
+        <a-progress :percent="item.progress" status="active" :size="[100, 5]" />
       </div>
       <!-- 图标 气泡卡片 -->
       <!-- 字体图标部分 -->
@@ -338,6 +338,7 @@ import { getProjectsData } from "@/service";
 import usePagination from "@/hooks/usePagination";
 import { TabsProps } from "ant-design-vue/es/tabs";
 import { ElMessage, ElMessageBox } from "element-plus";
+import router from "@/router";
 //加入收藏
 const open2 = () => {
   ElMessage({
@@ -369,7 +370,7 @@ const DeleteObject = () => {
 const datas = ref();
 const showModalB = (id: object) => {
   datas.value = id;
-  console.log(datas.value);
+  console.log(datas.value); //获取的是点击的那个li 再打印里面的id
   openB.value = true;
 };
 const dialogVisible = ref(false);
@@ -387,7 +388,7 @@ const { data } = useRequest(
   {
     // 请求成功时
     onSuccess: () => {
-      // console.log(data.value);
+      console.log(data.value);
     },
   }
 );
@@ -415,6 +416,13 @@ const callback: TabsProps["onTabScroll"] = (val) => {
   console.log(val);
 };
 const checked = ref<boolean>(false);
+
+//点击li跳转路由  保存li的id
+const saveLiId = (id: object) => {
+  datas.value = id;
+  console.log(datas.value.id); //获取的是点击的那个li 再打印里面的id
+  router.push(`/projectManagement/Project/${datas.value.id}`);
+};
 </script>
 <style>
 .ant-tabs-tab {

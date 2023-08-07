@@ -1,7 +1,7 @@
 <template>
   <header
     style="box-shadow: 0 0 10px #ccc"
-    class="w-[100%] flex h-[65px] bg-white fixed top-[0] left-[0] z-[9] justify-between pl-[24px] pr-[30px]"
+    class="w-[100%] flex h-[65px] bg-white fixed top-[0] left-[0] z-[9] justify-between"
   >
     <div class="flex">
       <!-- 图标logo -->
@@ -31,40 +31,31 @@
       <a-tabs v-model:activeKey="activeKey" style="height: 65px">
         <a-tab-pane key="1">
           <template #tab
-            ><span
-              class="flex justify-center items-center text-[16px]"
-              @click="router.push('/index')"
+            ><span class="flex justify-center items-center text-[19px]"
               ><Icon
                 icon="icon-park-outline:new-computer"
                 class="mr-[5px]"
               />工作台</span
             ></template
-          >
-          王子傲的页面
-        </a-tab-pane>
+          ></a-tab-pane
+        >
         <a-tab-pane key="2" force-render>
-          <!-- 习然然的页面  跳转的页面路由为projectManagement/ProjectLists/ProjectList/1 -->
           <template #tab
-            ><span
-              class="flex justify-center items-center text-[16px]"
-              @click="
-                router.push('/projectManagement/ProjectLists/ProjectList/1')
-              "
+            ><span class="flex justify-center items-center text-[19px]"
               ><Icon icon="solar:chart-bold" />项目</span
             ></template
           >
         </a-tab-pane>
         <a-tab-pane key="3">
-          <!-- 王子傲的页面 -->
           <template #tab
-            ><span
-              class="flex justify-center items-center text-[16px]"
-              @click="router.push('/departmentManagement/departmentManagement')"
-              ><Icon icon="ic:round-person" class="mr-[5px]" />部门</span
+            ><span class="flex justify-center items-center text-[19px]"
+              ><Icon
+                icon="icon-park-outline:new-computer"
+                class="mr-[5px]"
+              />部门</span
             ></template
-          >
-          页面内容
-        </a-tab-pane>
+          ></a-tab-pane
+        >
       </a-tabs>
     </div>
     <!-- 右边头像信息 -->
@@ -131,71 +122,27 @@
             v-model:selectedKeys="selectedKeys"
             style="width: 140px"
             mode="vertical"
-          >
-            <a-menu-item key="0" class="flex items-center justify-center">
-              <SettingOutlined />
-              <a
-                class="text-[#000] ml-[3px]"
-                @click="router.push('/personalCenter/personalCenter')"
-              >
-                个人设置
-              </a>
-            </a-menu-item>
-            <a-menu-item
-              key="1"
-              class="flex items-center justify-center"
-              @click="showModal"
-            >
-              <PoweroffOutlined />
-              <a class="text-[#000] ml-[3px]">退出登录</a>
-            </a-menu-item>
-          </a-menu>
+            :items="items"
+            @click="handleClick"
+          />
         </template>
         <a-button type="text"
           ><img
             class="rounded-[50%] w-[32px] h-[32px] mr-[9px]"
-            :src="userData?.avatar"
+            src="	https://fastly.picsum.photos/id/800/100/100.jpg?hmac=1ZFk6tFMaH90_tNhZgiL5zsGttEKB4cKQCUXQKDm6kc"
           />
-          <span class="text-[20px]">{{ userData?.username }}</span></a-button
+          <span class="text-[20px]">xrr</span></a-button
         >
       </a-popover>
     </div>
-    <!-- 退出登录 开始 -->
-    <a-modal
-      v-model:open="open"
-      title="温馨提示"
-      @ok="handleOk"
-      :centered="true"
-    >
-      <template #footer>
-        <a-button key="back" @click="handleCancel">取消</a-button>
-        <a-button
-          key="submit"
-          type="primary"
-          @click="handleOk"
-          class="bg-[#66b1ff]"
-          >确定</a-button
-        >
-      </template>
-      <div class="flex items-center mt-[40px]">
-        <Icon
-          icon="dashicons:warning"
-          class="text-[#e6a23c] text-[26px] mr-[10px]"
-        />
-        您确定要退出Arco吗?
-      </div>
-    </a-modal>
-    <!-- 退出登录 结束 -->
   </header>
 </template>
 <script lang="ts" setup>
-import router from "@/router";
-import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
-import { useRouter } from "vue-router";
-import store from "storejs";
-const route = useRoute();
-const activeKey = ref(["1"]);
+import type { MenuProps } from "ant-design-vue";
+const activeKey = ref("1");
+const selectedKeys = ref([]);
+const openKeys = ref([]);
 const tabListNoTitle = [
   {
     key: "@我",
@@ -210,64 +157,36 @@ const tabListNoTitle = [
     tab: "私信",
   },
 ];
-interface MenuItem {
-  key: string;
-  icon: () => unknown;
-  label: string;
-  title: string;
-}
-const openKeys = ref([]);
-const selectedKeys = ref([]);
+const items = ref([
+  {
+    key: "1",
+    icon: () => h(SettingOutlined),
+    label: "个人设置",
+    title: "个人设置",
+  },
+  {
+    key: "2",
+    icon: () => h(PoweroffOutlined),
+    label: "退出登录",
+    title: "退出登录",
+  },
+]);
 const key = ref("tab1");
 const noTitleKey = ref("app");
 const onTabChange = (value: string, type: string) => {
+  console.log(value, type);
   if (type === "key") {
     key.value = value;
   } else if (type === "noTitleKey") {
     noTitleKey.value = value;
   }
 };
-const { data: userData } = useRequest(() => getUserInfoData(), {});
-// 退出登录 弹出框
-const open = ref<boolean>(false);
-
-const showModal = () => {
-  open.value = true;
+const handleClick: MenuProps["onClick"] = (menuInfo) => {
+  console.log("click ", menuInfo);
 };
-// 成功执行
-const handleOk = () => {
-  open.value = false;
-  store.remove("arco_auth");
-  store.remove("routingData");
-  router.push("/Login");
-};
-// 失败执行
-const handleCancel = () => {
-  open.value = false;
-};
-
-//接收路由数据
-const determineTheCurrentPage = () => {
-  if (route.path.includes("index")) {
-    activeKey.value = ["1"];
-  } else if (route.path.includes("projectManagement")) {
-    activeKey.value = ["2"];
-  } else if (route.path.includes("departmentManagement")) {
-    activeKey.value = ["3"];
-  }
-};
-watch(
-  route,
-  () => {
-    determineTheCurrentPage();
-  },
-  {
-    immediate: true,
-  }
-);
 </script>
 <style>
-.ant-tabs-tab {
+header .ant-tabs-tab {
   height: 65px;
   margin-right: 32px !important;
 }

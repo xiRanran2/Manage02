@@ -15,7 +15,7 @@
           />
           <div class="flex flex-col ml-[5px] items-start">
             <div>
-              <a href="">{{ item.name }}</a>
+              <a @click="saveLiId(item)">{{ item.name }}</a>
               <span
                 class="ml-[5px] text-[10px] bg-[#f0f9eb] text-[#67c23a] px-[5px] py-[2px]"
                 >公开</span
@@ -39,7 +39,11 @@
           class="flex flex-col items-start w-[300px] text-[#a3a3a3] ml-[30px]"
         >
           <span>进度</span>
-          <a-progress :percent="item.progress" status="active" />
+          <a-progress
+            :percent="item.progress"
+            status="active"
+            :size="[100, 5]"
+          />
         </div>
         <!-- 图标 气泡卡片 -->
         <!-- 字体图标部分 -->
@@ -381,6 +385,13 @@ const dialogVO = (id: object) => {
   datas.value = id;
   // console.log(datas.value);
   dialogVisible.value = true;
+};
+//点击li跳转路由  保存li的id
+import router from "@/router";
+const saveLiId = (id: object) => {
+  datas.value = id;
+  console.log(datas.value.id); //获取的是点击的那个li 再打印里面的id
+  router.push(`/projectManagement/Project/${datas.value.id}`);
 };
 </script>
 <style></style>
