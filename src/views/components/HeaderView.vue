@@ -31,28 +31,40 @@
       <a-tabs v-model:activeKey="activeKey" style="height: 65px">
         <a-tab-pane key="1">
           <template #tab
-            ><span class="flex justify-center items-center text-[16px]"
+            ><span
+              class="flex justify-center items-center text-[16px]"
+              @click="router.push('/index')"
               ><Icon
                 icon="icon-park-outline:new-computer"
                 class="mr-[5px]"
               />工作台</span
             ></template
-          ></a-tab-pane
-        >
+          >
+          王子傲的页面
+        </a-tab-pane>
         <a-tab-pane key="2" force-render>
+          <!-- 习然然的页面  跳转的页面路由为projectManagement/ProjectLists/ProjectList/1 -->
           <template #tab
-            ><span class="flex justify-center items-center text-[16px]"
+            ><span
+              class="flex justify-center items-center text-[16px]"
+              @click="
+                router.push('/projectManagement/ProjectLists/ProjectList/1')
+              "
               ><Icon icon="solar:chart-bold" />项目</span
             ></template
           >
         </a-tab-pane>
         <a-tab-pane key="3">
+          <!-- 王子傲的页面 -->
           <template #tab
-            ><span class="flex justify-center items-center text-[16px]"
+            ><span
+              class="flex justify-center items-center text-[16px]"
+              @click="router.push('/departmentManagement/departmentManagement')"
               ><Icon icon="ic:round-person" class="mr-[5px]" />部门</span
             ></template
-          ></a-tab-pane
-        >
+          >
+          页面内容
+        </a-tab-pane>
       </a-tabs>
     </div>
     <!-- 右边头像信息 -->
@@ -119,9 +131,23 @@
             v-model:selectedKeys="selectedKeys"
             style="width: 140px"
             mode="vertical"
-            :items="items"
-            @click="handleClick"
-          />
+          >
+            <a-menu-item key="0" class="flex items-center justify-center">
+              <SettingOutlined />
+              <a
+                class="text-[#000] ml-[3px]"
+                @click="router.push('/personalCenter/personalCenter')"
+              >
+                个人设置
+              </a>
+            </a-menu-item>
+            <a-menu-item key="1" class="flex items-center justify-center">
+              <PoweroffOutlined />
+              <a class="text-[#000] ml-[3px]" @click="router.push('/login')"
+                >退出登录</a
+              >
+            </a-menu-item>
+          </a-menu>
         </template>
         <a-button type="text"
           ><img
@@ -135,6 +161,7 @@
   </header>
 </template>
 <script lang="ts" setup>
+import router from "@/router";
 import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
@@ -162,20 +189,6 @@ interface MenuItem {
 }
 const openKeys = ref([]);
 const selectedKeys = ref([]);
-const items = ref([
-  {
-    key: "1",
-    icon: () => h(SettingOutlined),
-    label: "个人设置",
-    title: "个人设置",
-  },
-  {
-    key: "2",
-    icon: () => h(PoweroffOutlined),
-    label: "退出登录",
-    title: "退出登录",
-  },
-]);
 const key = ref("tab1");
 const noTitleKey = ref("app");
 const onTabChange = (value: string, type: string) => {
@@ -184,13 +197,6 @@ const onTabChange = (value: string, type: string) => {
     key.value = value;
   } else if (type === "noTitleKey") {
     noTitleKey.value = value;
-  }
-};
-const handleClick = ({ key }: MenuItem) => {
-  if (key === "1") {
-    $router.push("/personalCenter/personalCenter");
-  } else if (key === "2") {
-    $router.push("/login");
   }
 };
 const { data: userData } = useRequest(() => getUserInfoData(), {});

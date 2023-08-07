@@ -63,7 +63,9 @@
         <div class="flex items-center">
           <div class="mr-[124px]">{{ item.created_at }}</div>
           <div class="pr-[120px]">
-            <a-button type="link">查看</a-button>
+            <a-button type="link" @click="router.push(`${item.url}`)"
+              >查看</a-button
+            >
             <a-button type="text" disabled>已读</a-button>
           </div>
         </div>
@@ -72,6 +74,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import router from "@/router";
 import { getPersonalMessage } from "@/service";
 const { data: PersonalMessage } = useRequest(
   () =>
@@ -93,4 +96,5 @@ const { data: PersonalMessage } = useRequest(
     },
   }
 );
+//传参
 </script>

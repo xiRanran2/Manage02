@@ -23,7 +23,7 @@
       <PublicTemplate v-if="activeKey === '2'" />
     </div>
 
-    <!-- 创建新项目 对话框 -->
+    <!-- 创建项目模板 对话框 -->
     <a-modal
       v-model:open="modalVisible"
       title="添加模板"
@@ -35,23 +35,14 @@
         class="border-t-[1px] border-[#dcdfe6] border-b-[1px] py-[12px] pb-[36px]"
       >
         <!-- 上传图片 -->
-        <a-upload
-          v-model:file-list="fileList"
-          name="avatar"
-          list-type="picture-card"
-          class="avatar-uploader"
-          :show-upload-list="false"
-          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-          :before-upload="beforeUpload"
-          @change="handleChange"
+        <div
+          @click="showModal"
+          style="border: 1px dotted #ccc; cursor: pointer"
+          class="w-[280px] h-[130px] mb-[10px] flex items-center justify-center rounded-[10px] text-[#5a5555]"
         >
-          <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
-          <div v-else>
-            <loading-outlined v-if="loading"></loading-outlined>
-            <plus-outlined v-else></plus-outlined>
-            <div class="ant-upload-text">添加封面</div>
-          </div>
-        </a-upload>
+          <plus-outlined class="text-[30px]"></plus-outlined>
+          <div class="ant-upload-text">添加封面</div>
+        </div>
         <a-input
           placeholder="项目名称"
           style="width: 280px; margin-bottom: 8px"
@@ -68,16 +59,23 @@
         />
       </div>
     </a-modal>
+    <ModifyAvatar v-model:open="open" />
   </div>
 </template>
 <script lang="ts" setup>
-import { PlusOutlined, LoadingOutlined } from "@ant-design/icons-vue";
+import { PlusOutlined } from "@ant-design/icons-vue";
 import PublicTemplate from "./PublicTemplateView.vue";
 import PersonalTemplate from "./PersonalTemplateView.vue";
+import ModifyAvatar from "@/views/components/ModifyAvatar.vue";
 const activeKey = ref("1");
 const value1 = ref("请选择项目模板(必选)");
 const modalVisible = ref<boolean>(false);
 const value = ref<string>("");
+//修改头像
+const open = ref<boolean>(false);
+const showModal = () => {
+  open.value = true;
+};
 </script>
 <style>
 .lis .ant-tabs-nav-list {

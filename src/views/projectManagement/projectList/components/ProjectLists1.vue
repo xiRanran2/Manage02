@@ -40,52 +40,61 @@
       <!-- 图标 气泡卡片 -->
       <!-- 字体图标部分 -->
       <div class="flex w-[200px] justify-around ml-[40px]">
-        <a-tooltip
-          placement="top"
-          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
-        >
-          <template #title>
-            <span class="text-[12px]">项目成员</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon icon="ph:user-light" width="12px" color="#606266" />
-          </div>
-        </a-tooltip>
-        <a-tooltip
+        <el-button
+          role="button"
+          tabindex="0"
+          style="border-radius: 50%"
+          class="w-[27.6px] h-[27.6px] border flex items-center justify-center"
+          @click="dialogVO(item)"
+          ><a-tooltip placement="top">
+            <template #title>
+              <span class="text-[12px]">项目成员</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon icon="ph:user-light" width="12px" color="#606266" />
+            </div> </a-tooltip
+        ></el-button>
+        <el-button
+          style="border-radius: 50%"
           @click="showModalB(item)"
-          placement="top"
+          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
+          ><a-tooltip placement="top">
+            <template #title>
+              <span class="text-[12px]">项目设置</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon icon="uil:setting" width="12px" color="#606266" />
+            </div> </a-tooltip
+        ></el-button>
+        <el-button
+          :plain="true"
+          @click="open2"
+          style="border-radius: 50%"
+          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
+          ><a-tooltip placement="top">
+            <template #title>
+              <span class="text-[12px]">加入收藏</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon icon="ph:star-light" width="12px" color="#606266" />
+            </div> </a-tooltip
+        ></el-button>
+        <el-button
+          @click="DeleteObject"
+          style="border-radius: 50%"
           class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
         >
-          <template #title>
-            <span class="text-[12px]">项目设置</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon icon="uil:setting" width="12px" color="#606266" />
-          </div>
-        </a-tooltip>
-        <a-tooltip
-          placement="top"
-          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
-        >
-          <template #title>
-            <span class="text-[12px]">加入收藏</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon icon="ph:star-light" width="12px" color="#606266" />
-          </div>
-        </a-tooltip>
-        <a-tooltip
-          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
-        >
-          <template #title>
-            <span class="text-[12px]">移至回收站</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon icon="icomoon-free:bin" width="12px" color="#606266" />
-          </div>
-        </a-tooltip>
+          <a-tooltip>
+            <template #title>
+              <span class="text-[12px]">移至回收站</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon icon="icomoon-free:bin" width="12px" color="#606266" />
+            </div> </a-tooltip
+        ></el-button>
       </div>
     </li>
+    <!-- 项目设置 -->
     <div class="setting">
       <a-modal
         v-model:open="openB"
@@ -252,6 +261,66 @@
         </div>
       </a-modal>
     </div>
+    <!-- 项目成员 -->
+    <el-dialog
+      v-model="dialogVisible"
+      title="项目成员"
+      style="width: 33%"
+      class="text-left"
+    >
+      <a-input
+        class="border-[1.5px] w-[100%] h-[36px] mb-[8px] border-[#d3d3d3]"
+        placeholder="请输入用户名或邮箱查找"
+      />
+      <hr />
+      <div
+        v-for="(item, index) in datas.member"
+        :key="item.id"
+        class="h-[60px] flex items-center justify-between mt-[10px]"
+      >
+        <div
+          v-if="index === 0"
+          class="w-[100%] flex items-center justify-between"
+        >
+          <div class="flex items-center">
+            <div>
+              <img
+                class="w-[36px] h-[36px] rounded-[8px]"
+                :src="item.avatar"
+                alt=""
+              />
+            </div>
+            <div class="ml-[16px] flex flex-col">
+              <span>{{ item.username }}</span>
+              <span class="mt-[8px]">{{ item.email }}</span>
+            </div>
+          </div>
+          <div class="flex">
+            <Icon class="mr-[10px]" icon="openmoji:person" />
+            <span>拥有者</span>
+          </div>
+        </div>
+        <div v-else class="w-[100%] flex items-center justify-between">
+          <div class="flex items-center">
+            <div>
+              <img
+                class="w-[36px] h-[36px] rounded-[8px]"
+                :src="item.avatar"
+                alt=""
+              />
+            </div>
+            <div class="ml-[16px] flex flex-col">
+              <span>{{ item.username }}</span>
+              <span class="mt-[8px]">{{ item.email }}</span>
+            </div>
+          </div>
+          <div class="flex">
+            <Icon class="mr-[10px]" icon="game-icons:character" />
+            <span>已加入</span>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
 
     <a-pagination
       class="mt-[15px]"
@@ -264,9 +333,38 @@
 </template>
 <script lang="ts" setup>
 const detailsData: any = ref([]);
+
 import { getProjectsData } from "@/service";
 import usePagination from "@/hooks/usePagination";
 import { TabsProps } from "ant-design-vue/es/tabs";
+import { ElMessage, ElMessageBox } from "element-plus";
+//加入收藏
+const open2 = () => {
+  ElMessage({
+    message: "收藏成功.",
+    type: "success",
+  });
+};
+//加入回收站
+const DeleteObject = () => {
+  ElMessageBox.confirm("你却请要将当前项移至回收站?", "温馨提示", {
+    confirmButtonText: "确定",
+    cancelButtonText: "取消",
+    type: "warning",
+  })
+    .then(() => {
+      ElMessage({
+        type: "success",
+        message: "删除成功",
+      });
+    })
+    .catch(() => {
+      ElMessage({
+        type: "info",
+        message: "取消删除",
+      });
+    });
+};
 //全部清单
 const datas = ref();
 const showModalB = (id: object) => {
@@ -274,7 +372,12 @@ const showModalB = (id: object) => {
   console.log(datas.value);
   openB.value = true;
 };
-
+const dialogVisible = ref(false);
+const dialogVO = (id: object) => {
+  datas.value = id;
+  // console.log(datas.value);
+  dialogVisible.value = true;
+};
 const { data } = useRequest(
   () =>
     getProjectsData({
@@ -284,7 +387,7 @@ const { data } = useRequest(
   {
     // 请求成功时
     onSuccess: () => {
-      console.log(data.value);
+      // console.log(data.value);
     },
   }
 );
@@ -300,13 +403,10 @@ const time: any = computed(() => {
     return item.created_at.slice(0, 10);
   });
 });
-
 //点击出现
-
 const openB = ref<boolean>(false);
-
 const handleOkB = (e: MouseEvent) => {
-  console.log(e);
+  // console.log(e);
   openB.value = false;
 };
 const mode = ref<TabsProps["tabPosition"]>("left");

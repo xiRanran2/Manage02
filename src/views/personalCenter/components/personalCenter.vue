@@ -38,13 +38,21 @@
     </div>
     <!-- 图片 -->
     <div
-      class="absolute top-[30px] right-[30px] cursor-pointer"
+      class="absolute top-[30px] right-[30px] cursor-pointer w-[180px] h-[180px] overflow-hidden rounded-[50%] border"
       @click="showModal"
     >
       <img
+        v-if="data && data.avatar.url"
+        :src="data.avatar.url"
+        alt=""
+        class="h-[200px] w-[200px] rounded-[50%] img_1"
+        :style="data.avatar.img"
+      />
+      <img
+        v-else
         :src="data ? data.avatar : ''"
         alt=""
-        class="rounded-[50%] h-[180px] w-[180px] images"
+        class="h-[200px] w-[200px] rounded-[50%] img_1"
       />
       <Icon
         icon="clarity:plus-line"
@@ -101,6 +109,7 @@
             <a-space wrap>
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[117px] h-[40px]"
                 @click="SelectPicture"
                 >选择图片</a-button
@@ -113,6 +122,7 @@
               />
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[56px] h-[40px]"
                 @click="changeScaleS"
               >
@@ -125,6 +135,7 @@
               </a-button>
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[56px] h-[40px]"
                 @click="changeScale"
               >
@@ -137,6 +148,7 @@
               </a-button>
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[56px] h-[40px]"
                 @click="rotateLeft"
               >
@@ -149,6 +161,7 @@
               </a-button>
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[56px] h-[40px]"
                 @click="rotateRight"
               >
@@ -165,6 +178,7 @@
             <a-space wrap>
               <a-button
                 type="primary"
+                style="background-color: #4eaded"
                 class="w-[70px] h-[40px] background"
                 @click="genxin"
                 >保存</a-button
@@ -180,8 +194,6 @@
 import { reactive, UnwrapRef, ref, h } from "vue";
 import { useRequest } from "vue-request";
 import { User, upLoadFileRecord } from "@/service";
-// import {} from "vue-c"
-// import { VueCropper } from "vue-cropper";
 import { VueCropper } from "vue-cropper";
 import "vue-cropper/dist/index.css";
 
@@ -270,7 +282,10 @@ const realTime = (data: any) => {
 };
 // 更新图片
 const genxin = () => {
-  // data._rawValue.avatar = previews.value.url;
+  data._rawValue.avatar = {
+    url: previews.value.url,
+    img: previews.value.img,
+  };
   open.value = false;
 };
 </script>

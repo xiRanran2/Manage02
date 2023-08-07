@@ -168,3 +168,41 @@ export const getPersonalMessage = async (params: {
       params,
     })
   ).data.data;
+
+// 通知
+export const getInformMessage = async (params: {
+  prop_order: string;
+  order: string;
+  pageNo: number;
+  pageSize: number;
+  keyword: unknown;
+  type: string;
+  receiver_id: number;
+  limit: number;
+  offset: number;
+}) =>
+  (
+    await http.get<getProjectData>("/api/v1/messages/list", {
+      params,
+    })
+  ).data.data;
+
+//添加项目模板的数据  产品进展
+export const AddProjectTemplate = async (params: {
+  limit: number;
+  offset: number;
+}) =>
+  (
+    await http.get<getProjectData>("/api/v1/project_templates/list", {
+      params,
+    })
+  ).data.data.rows;
+
+//邀请的请求
+//添加项目模板的数据  产品进展  需要传的参数
+export const FetchInviteData = async (params: { uuid: string }) =>
+  (
+    await http.get<getProjectData>("/api/v1/invites/uuid", {
+      params,
+    })
+  ).data;

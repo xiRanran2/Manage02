@@ -1,3 +1,4 @@
 <template>
-  <div>56234562678345</div>
+  <div></div>
 </template>
+<script lang="ts" setup></script>

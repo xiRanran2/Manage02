@@ -1,4 +1,6 @@
 <template>
-  <div></div>
+  <div><LeftMenu /></div>
 </template>
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import LeftMenu from "@/views/components/LeftMenu.vue";
+</script>

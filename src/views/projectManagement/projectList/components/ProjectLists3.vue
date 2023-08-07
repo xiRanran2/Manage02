@@ -39,31 +39,38 @@
       </div>
       <!-- 图标 气泡卡片 -->
       <div class="flex w-[150px] justify-end pr-[38px] ml-[40px]">
-        <a-tooltip
-          placement="top"
-          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center mr-[10px]"
+        <el-button
+          role="button"
+          tabindex="0"
+          style="border-radius: 50%"
+          class="w-[27.6px] h-[27.6px] border flex items-center justify-center"
+          ><a-tooltip placement="top">
+            <template #title>
+              <span class="text-[12px]">从归档中恢复项目</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon
+                icon="material-symbols:refresh"
+                width="12px"
+                color="#606266"
+              />
+            </div> </a-tooltip
+        ></el-button>
+        <el-button
+          role="button"
+          tabindex="0"
+          style="border-radius: 50%"
+          class="w-[27.6px] h-[27.6px] border flex items-center justify-center"
         >
-          <template #title>
-            <span class="text-[12px]">从归档中恢复项目</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon
-              icon="material-symbols:refresh"
-              width="12px"
-              color="#606266"
-            />
-          </div>
-        </a-tooltip>
-        <a-tooltip
-          class="w-[27.6px] h-[27.6px] rounded-[50%] border flex items-center justify-center"
-        >
-          <template #title>
-            <span class="text-[12px]">移至回收站</span>
-          </template>
-          <div class="cursor-pointer">
-            <Icon icon="icomoon-free:bin" width="12px" color="#606266" />
-          </div>
-        </a-tooltip>
+          <a-tooltip>
+            <template #title>
+              <span class="text-[12px]">移至回收站</span>
+            </template>
+            <div class="cursor-pointer">
+              <Icon icon="icomoon-free:bin" width="12px" color="#606266" />
+            </div>
+          </a-tooltip>
+        </el-button>
       </div>
     </li>
     <a-pagination

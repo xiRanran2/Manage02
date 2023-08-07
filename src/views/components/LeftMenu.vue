@@ -1,7 +1,13 @@
 <template>
   <a-layout style="min-height: 100vh">
     <a-layout-sider v-model:collapsed="collapsed" collapsible class="mt-[65px]">
-      <a-menu v-model:selectedKeys="selectedKeys" theme="light" mode="inline">
+      <a-menu
+        v-model:selectedKeys="selectedKeys"
+        v-model:openKeys="state.openKeys"
+        theme="light"
+        mode="inline"
+        :inline-collapsed="state.collapsed"
+      >
         <a-sub-menu key="sub1">
           <template #title>
             <span>
@@ -15,7 +21,7 @@
               <span
                 class="ml-2"
                 @click="
-                  $router.push('/projectManagement/ProjectLists/ProjectList/1')
+                  router.push('/projectManagement/ProjectLists/ProjectList/1')
                 "
                 >全部项目</span
               >
@@ -27,7 +33,7 @@
               <span
                 class="ml-2"
                 @click="
-                  $router.push('/projectManagement/ProjectLists/ProjectList/2')
+                  router.push('/projectManagement/ProjectLists/ProjectList/2')
                 "
                 >我的收藏</span
               >
@@ -39,7 +45,7 @@
               <span
                 class="ml-2"
                 @click="
-                  $router.push('/projectManagement/ProjectLists/ProjectList/3')
+                  router.push('/projectManagement/ProjectLists/ProjectList/3')
                 "
                 >已归档项目</span
               >
@@ -51,7 +57,7 @@
               <span
                 class="ml-2"
                 @click="
-                  $router.push('/projectManagement/ProjectLists/ProjectList/4')
+                  router.push('/projectManagement/ProjectLists/ProjectList/4')
                 "
                 >回收站</span
               >
@@ -60,7 +66,7 @@
         </a-sub-menu>
         <a-menu-item key="5">
           <book-outlined />
-          <span @click="$router.push('/projectManagement/ProjectTemplate')"
+          <span @click="router.push('/projectManagement/ProjectTemplate')"
             >项目模板</span
           >
         </a-menu-item>
@@ -76,7 +82,7 @@
               <Icon icon="ant-design:message-outlined" width="20px" />
               <span
                 class="ml-2"
-                @click="$router.push('/projectManagement/message/mention')"
+                @click="router.push('/projectManagement/message/mention')"
                 >@我</span
               >
             </div>
@@ -86,7 +92,7 @@
               <Icon icon="basil:bullhorn-outline" width="20px" />
               <span
                 class="ml-2"
-                @click="$router.push('/projectManagement/message/inform')"
+                @click="router.push('/projectManagement/message/inform')"
                 >通知</span
               >
             </div>
@@ -96,7 +102,7 @@
               <Icon icon="ph:envelope-open" width="20px" />
               <span
                 class="ml-2"
-                @click="$router.push('/projectManagement/message/personal')"
+                @click="router.push('/projectManagement/message/personal')"
                 >私信</span
               >
             </div>
@@ -126,7 +132,7 @@
           <inform v-if="selectedKeys.includes('7')" />
           <personal v-if="selectedKeys.includes('8')" />
           <menuList
-            v-if="
+            v-if!="
               selectedKeys.includes('5') &&
               selectedKeys.includes('6') &&
               selectedKeys.includes('7') &&
@@ -152,19 +158,13 @@ import personal from "@/views/projectManagement/message/components/personal.vue"
 import router from "@/router/index";
 const collapsed = ref<boolean>(false);
 const selectedKeys = ref<string[]>(["1"]);
-router.beforeEach((to) => {
-  // console.log(to);
-  // console.log(selectedKeys);
-  if (to.name === "ProjectList_1") {
-    selectedKeys.value[0] = "1";
-  } else if (to.name === "ProjectList_2") {
-    selectedKeys.value[0] = "2";
-  } else if (to.name === "ProjectList_3") {
-    selectedKeys.value[0] = "3";
-  } else if (to.name === "ProjectList_4") {
-    selectedKeys.value[0] = "4";
-  }
+const state = reactive({
+  collapsed: false,
+  openKeys: ["sub1", "sub2"],
 });
+selectedKeys.value = [
+  useRoute().path.split("")[useRoute().path.lastIndexOf("/") + 1],
+];
 </script>
 <style>
 .ant-layout-sider-children {

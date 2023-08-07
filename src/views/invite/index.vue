@@ -11,11 +11,11 @@
       />
       <div class="flex flex-col items-center justify-center">
         <img
-          :src="inviteData?.data.actor.avatar"
+          src="https://fastly.picsum.photos/id/985/100/100.jpg?hmac=XdeEF2QiMjOi7TdHvr96bH3GmJE3ilmPnZmkHPdaE0A"
           class="w-[64px] h-[64px] rounded-[50%]"
         />
         <p class="mt-[8px] text-[14px]">
-          <span>{{ inviteData?.data.actor.username }}</span
+          <span>张阳彪</span
           ><span class="text-[#9393a1] ml-[5px]">邀请你加入项目</span>
         </p>
         <p class="font-[800]">shunxi</p>
@@ -31,41 +31,25 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { FetchInviteData, getPersonalMessage } from "@/service";
-const href2 = ref(
-  window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
-);
+// import { FetchInviteData } from "@/service";
+// const href2 = ref(
+//   Number(
+//     window.location.href.substring(window.location.href.lastIndexOf("/") + 1)
+//   )
+// );
+// console.log(href2);
+
 //传参
-const { data: inviteData } = useRequest(
-  () =>
-    FetchInviteData({
-      uuid: href2.value,
-    }),
-  {
-    // 请求成功时
-    onSuccess: () => {
-      console.log(inviteData.value);
-    },
-  }
-);
-const { data: PersonalMessage } = useRequest(
-  () =>
-    getPersonalMessage({
-      prop_order: "id",
-      order: "desc",
-      pageNo: 1,
-      pageSize: 10,
-      keyword: null,
-      type: "personal",
-      receiver_id: 73,
-      limit: 10,
-      offset: 0,
-    }),
-  {
-    // 请求成功时
-    onSuccess: () => {
-      console.log(PersonalMessage.value);
-    },
-  }
-);
+// const { data: inviteData } = useRequest(
+//   () =>
+//     FetchInviteData({
+//       uuid: "``",
+//     }),
+//   {
+//     // 请求成功时
+//     onSuccess: () => {
+//       console.log(inviteData.value);
+//     },
+//   }
+// );
 </script>
