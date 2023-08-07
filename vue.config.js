@@ -4,6 +4,7 @@ const AutoImportComponents = require("unplugin-vue-components/webpack");
 const { AntDesignVueResolver } = require("unplugin-vue-components/resolvers");
 module.exports = defineConfig({
   transpileDependencies: true,
+  runtimeCompiler: true,
   configureWebpack: {
     plugins: [
       AutoImport({

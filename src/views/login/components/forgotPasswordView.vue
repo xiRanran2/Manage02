@@ -1,6 +1,7 @@
 <template>
   <!-- 注册 开始 -->
   <a-form
+    class="w-[320px] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]"
     ref="formRef"
     name="custom-validation"
     :model="formState"
@@ -38,7 +39,6 @@
         <span v-show="isCountdownRunning">({{ countdown }})</span>
       </a-button>
     </a-form-item>
-    <!-- 验证码 -->
 
     <!-- 设置密码 -->
     <a-form-item name="passwords">
@@ -51,7 +51,6 @@
       >
       </a-input-password>
     </a-form-item>
-    <!-- 设置密码 -->
 
     <!-- 确认密码 -->
     <a-form-item name="passwordConfirm">
@@ -64,7 +63,6 @@
       >
       </a-input-password>
     </a-form-item>
-    <!-- 确认密码 -->
 
     <!-- 注册按钮 登录按钮 -->
     <div class="flex items-center">
@@ -96,22 +94,19 @@ import type { Rule } from "ant-design-vue/es/form";
 import { notification, type FormInstance } from "ant-design-vue";
 import { sendVerificationCodes, resetPassword } from "@/service";
 import useCountdown from "@/hooks/useCountdown";
+import { useRequest } from "vue-request";
 
 // 定义向父组件发送的自定义事件
 const emits = defineEmits(["update"]);
-
 // 点击按钮时触发的方法 触发父组件的自定义事件，将新值传递给父组件
 const updateParentValue = () => emits("update", "loginView");
-
 // 使用倒计时功能函数，并传入初始值 30 秒
 const { countdown, isCountdownRunning, startCountdown } = useCountdown(30);
-
 // 在组件卸载前清除计时器
 onBeforeUnmount(() => {
   isCountdownRunning.value = true;
   startCountdown();
 });
-
 // 注册数据
 const formRef = ref<FormInstance>();
 const formState = reactive({
@@ -122,7 +117,7 @@ const formState = reactive({
 });
 
 // 发送验证码
-const { data: isSendSuccess, run: runSendverificationcodes } = useRequest(
+const { data: isSendSuccess, run: runSendCationCodes } = useRequest(
   () => sendVerificationCodes({ target: formState.email, type: 1 }),
   {
     manual: true,
@@ -184,38 +179,28 @@ let validateEmail = async (_rule: Rule, value: string) => {
     // 使用正则表达式验证邮箱格式
     const emailRegex =
       /^[a-zA-Z0-9._%+-]+@(gmail\.com|outlook\.com|yahoo\.com|hotmail\.com|icloud\.com|qq\.com|163\.com|sina\.com|126\.com|aliyun\.com|yeah\.net)$/i;
-    if (!emailRegex.test(value)) {
-      return Promise.reject("请输入有效的邮箱地址");
-    }
+    if (!emailRegex.test(value)) return Promise.reject("请输入有效的邮箱地址");
 
     return Promise.resolve();
   }
 };
 // 验证验证码的异步函数
 let validateVerificationCode = async (_rule: Rule, value: string) => {
-  if (value === "") {
-    return Promise.reject("请输入验证码");
-  } else {
-    return Promise.resolve();
-  }
+  return value === "" ? Promise.reject("请输入验证码") : Promise.resolve();
 };
 // 验证密码的异步函数
 let validatePass = async (_rule: Rule, value: string) => {
-  if (value === "") {
-    return Promise.reject("请输入密码");
-  }
+  if (value === "") return Promise.reject("请输入密码");
 
   // 使用正则表达式检查密码长度在6到15个字符之间
   const passwordRegex = /^.{6,15}$/;
-  if (!passwordRegex.test(value)) {
+  if (!passwordRegex.test(value))
     return Promise.reject("密码长度应在6到15个字符之间");
-  }
 
   // 使用正则表达式验证密码必须是字母和数字的组合
   const passwordCombinationRegex = /^(?=.*\d)(?=.*[a-zA-Z]).*$/;
-  if (!passwordCombinationRegex.test(value)) {
+  if (!passwordCombinationRegex.test(value))
     return Promise.reject("密码必须是字母和数字的组合");
-  }
 
   return Promise.resolve();
 };
@@ -253,7 +238,7 @@ const onSendVerificationCode = async () => {
       // 验证邮箱合法性
       await formRef.value.validateFields("email");
       // 验证用户名和邮箱的合法性都通过后，触发发送验证码的请求
-      runSendverificationcodes();
+      runSendCationCodes();
     } catch (error) {
       console.log("用户名或邮箱验证失败");
     }
@@ -276,9 +261,7 @@ const onSubmit = () => {
 
 // 重置表单
 const resetForm = () => {
-  if (formRef.value) {
-    formRef.value.resetFields();
-  }
+  if (formRef.value) formRef.value.resetFields();
 };
 </script>
 

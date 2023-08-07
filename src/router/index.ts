@@ -1,39 +1,28 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import LoginView from "@/views/login/LoginView.vue";
-// const route: RouteRecordRaw[] = [
-//   {
-//     path: "/",
-//     name: "home",
-//     component: LoginView,
-//   },
-// ];
-const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "home",
-    component: LoginView,
-  },
-  {
-    path: "/LoginView",
-    component: () => import("@/views/login/LoginView.vue"),
-  },
-  {
-    path: "/ProjectView",
-    component: () => import("@/views/Project/ProjectView.vue"),
-  },
-  {
-    path: "/PersonalView",
-    component: () => import("@/views/Project/PersonalView.vue"),
-  },
-  {
-    path: "/ProjectTemplate",
-    component: () => import("@/views/Project/ProjectTemplate.vue"),
-  },
-];
-
+import store from "storejs";
+import { createRouter, createWebHistory } from "vue-router";
+import constantRoutes from "./constant.routes";
+import buildDynamicRoutes from "./dynamic.routes";
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes,
+  routes: constantRoutes,
+});
+
+const CONSTANT_ROUTES_NUM = router.getRoutes().map((route) => route.path);
+router.beforeEach((to, from, next) => {
+  if (CONSTANT_ROUTES_NUM.includes(to.fullPath)) {
+    next();
+  } else if (router.getRoutes().length <= CONSTANT_ROUTES_NUM.length) {
+    const menus: TLayout | undefined = store.get("menus");
+    //添加动态路由后跳转
+    if (Array.isArray(menus)) {
+      buildDynamicRoutes(menus);
+      next(to.fullPath);
+    } else {
+      next("/login");
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;

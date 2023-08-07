@@ -1,20 +1,7 @@
 <template>
-  <!-- <Header class="h-[65px]" v-if="InfoExits"></Header> -->
-  <!-- <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav> -->
   <router-view />
 </template>
-<script setup lang="ts">
-// import Header from "@/views/components/HeaderView.vue";
-import store from "storejs";
-// const InfoExits = ref(false);
-const getInfomsg = store.get("arco_auth");
-// if (getInfomsg) {
-//   InfoExits.value = !InfoExits.value;
-// }
-</script>
+<script setup lang="ts"></script>
 
 <style lang="scss">
 #app {
