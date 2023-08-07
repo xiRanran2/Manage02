@@ -39,7 +39,11 @@
           class="flex flex-col items-start w-[300px] text-[#a3a3a3] ml-[30px]"
         >
           <span>进度</span>
-          <a-progress :percent="item.progress" status="active" />
+          <a-progress
+            :percent="item.progress"
+            status="active"
+            :size="[100, 5]"
+          />
         </div>
         <!-- 图标 气泡卡片 -->
         <!-- 字体图标部分 -->

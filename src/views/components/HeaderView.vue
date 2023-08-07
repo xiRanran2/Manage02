@@ -141,11 +141,13 @@
                 个人设置
               </a>
             </a-menu-item>
-            <a-menu-item key="1" class="flex items-center justify-center">
+            <a-menu-item
+              key="1"
+              class="flex items-center justify-center"
+              @click="showModal"
+            >
               <PoweroffOutlined />
-              <a class="text-[#000] ml-[3px]" @click="router.push('/login')"
-                >退出登录</a
-              >
+              <a class="text-[#000] ml-[3px]">退出登录</a>
             </a-menu-item>
           </a-menu>
         </template>
@@ -158,6 +160,32 @@
         >
       </a-popover>
     </div>
+    <!-- 退出登录 开始 -->
+    <a-modal
+      v-model:open="open"
+      title="温馨提示"
+      @ok="handleOk"
+      :centered="true"
+    >
+      <template #footer>
+        <a-button key="back" @click="handleCancel">取消</a-button>
+        <a-button
+          key="submit"
+          type="primary"
+          @click="handleOk"
+          class="bg-[#66b1ff]"
+          >确定</a-button
+        >
+      </template>
+      <div class="flex items-center mt-[40px]">
+        <Icon
+          icon="dashicons:warning"
+          class="text-[#e6a23c] text-[26px] mr-[10px]"
+        />
+        您确定要退出Arco吗?
+      </div>
+    </a-modal>
+    <!-- 退出登录 结束 -->
   </header>
 </template>
 <script lang="ts" setup>
@@ -165,8 +193,9 @@ import router from "@/router";
 import { getUserInfoData } from "@/service";
 import { PoweroffOutlined, SettingOutlined } from "@ant-design/icons-vue";
 import { useRouter } from "vue-router";
-const $router = useRouter();
-const activeKey = ref("1");
+import store from "storejs";
+const route = useRoute();
+const activeKey = ref(["1"]);
 const tabListNoTitle = [
   {
     key: "@我",
@@ -200,6 +229,43 @@ const onTabChange = (value: string, type: string) => {
   }
 };
 const { data: userData } = useRequest(() => getUserInfoData(), {});
+// 退出登录 弹出框
+const open = ref<boolean>(false);
+
+const showModal = () => {
+  open.value = true;
+};
+// 成功执行
+const handleOk = () => {
+  open.value = false;
+  store.remove("arco_auth");
+  store.remove("routingData");
+  router.push("/Login");
+};
+// 失败执行
+const handleCancel = () => {
+  open.value = false;
+};
+
+//接收路由数据
+const determineTheCurrentPage = () => {
+  if (route.path.includes("index")) {
+    activeKey.value = ["1"];
+  } else if (route.path.includes("projectManagement")) {
+    activeKey.value = ["2"];
+  } else if (route.path.includes("departmentManagement")) {
+    activeKey.value = ["3"];
+  }
+};
+watch(
+  route,
+  () => {
+    determineTheCurrentPage();
+  },
+  {
+    immediate: true,
+  }
+);
 </script>
 <style>
 .ant-tabs-tab {

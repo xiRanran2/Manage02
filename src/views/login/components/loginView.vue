@@ -2,7 +2,7 @@
   <div
     class="fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[320px]"
   >
-    <div class="flex flex-col items-start">
+    <div class="flex flex-col items-start pb-[20px]">
       <div class="text-[24px] leading-[32px] text-[#1d2129] font-bold-500">
         登录 Arco
       </div>

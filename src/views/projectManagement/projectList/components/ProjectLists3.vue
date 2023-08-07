@@ -35,7 +35,7 @@
       <!-- 进度条 -->
       <div class="flex flex-col items-start w-[300px] text-[#a3a3a3] ml-[30px]">
         <span>进度</span>
-        <a-progress :percent="item.progress" status="active" />
+        <a-progress :percent="item.progress" status="active" :size="[100, 5]" />
       </div>
       <!-- 图标 气泡卡片 -->
       <div class="flex w-[150px] justify-end pr-[38px] ml-[40px]">

@@ -165,6 +165,7 @@ const state = reactive({
 selectedKeys.value = [
   useRoute().path.split("")[useRoute().path.lastIndexOf("/") + 1],
 ];
+console.log(selectedKeys.value);
 </script>
 <style>
 .ant-layout-sider-children {
