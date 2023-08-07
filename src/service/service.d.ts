@@ -229,3 +229,35 @@ type ResponseData_2 = {
   };
   msg: string;
 };
+// 邀请数据开始
+interface RootDataObject {
+  code: number;
+  data: InvitesData;
+  msg: string;
+}
+type TInviteGetData = IBaseResponse<RootDataObject>;
+interface InvitesData {
+  count: number;
+  rows: Rowdatas[];
+}
+
+interface Rowdatas {
+  id: number;
+  actor_id: number;
+  receiver_id: number;
+  content: string;
+  is_read: number;
+  type: string;
+  url: string;
+  created_at: string;
+  updated_at: string;
+  actor: Actordatas;
+}
+
+interface Actordatas {
+  username: string;
+  id: number;
+  avatar: string;
+}
+
+//邀请数据结束

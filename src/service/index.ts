@@ -202,7 +202,7 @@ export const AddProjectTemplate = async (params: {
 //添加项目模板的数据  产品进展  需要传的参数
 export const FetchInviteData = async (params: { uuid: string }) =>
   (
-    await http.get<getProjectData>("/api/v1/invites/uuid", {
+    await http.get("/api/v1/invites/uuid", {
       params,
     })
   ).data;

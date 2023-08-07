@@ -36,7 +36,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import RegisterView from "@/views/Login/components/RegisterView.vue";
+import RegisterView from "@/views/Login/components/registerView.vue";
 import loginView from "@/views/Login/components/loginView.vue";
 import ForgotPasswordView from "@/views/Login/components/forgotPasswordView.vue";
 // 切换选项卡
