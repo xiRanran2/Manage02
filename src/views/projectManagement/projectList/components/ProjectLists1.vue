@@ -420,8 +420,14 @@ const checked = ref<boolean>(false);
 //点击li跳转路由  保存li的id
 const saveLiId = (id: object) => {
   datas.value = id;
-  console.log(datas.value.id); //获取的是点击的那个li 再打印里面的id
+  console.log(datas.value); //获取的是点击的那个li 再打印里面的id
   router.push(`/projectManagement/Project/${datas.value.id}`);
+};
+//通过id传name名
+const FetchName = (id: object) => {
+  datas.value = id;
+  console.log(datas.value); //获取的是点击的那个li 再打印里面的id
+  // store.set('fetchName', datas.value);
 };
 </script>
 <style>

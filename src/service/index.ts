@@ -206,3 +206,105 @@ export const FetchInviteData = async (params: { uuid: string }) =>
       params,
     })
   ).data;
+
+//ZhouYu数据开始
+// tab栏中文件数据
+export const getDocument = async (params: {
+  project_id: number;
+  prop_order: string;
+  order: string;
+  is_recycle: number;
+}) =>
+  (
+    await http.get<getFiletData>("api/v1/project_files/list", {
+      params,
+    })
+  )?.data?.data.rows;
+
+// 概括项目动态数据
+export const getSummarydata = async (params: {
+  project_id: number;
+  limit: number;
+  offset: number;
+  prop_order: string;
+  order: string;
+}) =>
+  (
+    await http.get<getSummarizeRequestData>("api/v1/task_logs/list", {
+      params,
+    })
+  ).data.data.rows;
+
+// 下拉菜单的用户数据
+export const getSelectInfomation = async (params: { limit: number }) =>
+  (
+    await http.get<getFreshManIntroduceData>("api/v1/projects/list", {
+      params,
+    })
+  ).data.data.rows;
+// 概括项目统计部分
+export const getSummaryStatistics = async (params: { id: number }) =>
+  (
+    await http.get<getSummarizetData>("api/v1/projects/statistics", {
+      params,
+    })
+  ).data.data;
+
+// 菜单右侧人物数据
+export const getCharacterData = async (params: {
+  limit: number;
+  offset: number;
+  project_id: number;
+}) =>
+  (
+    await http.get<getCharacterDataDetails>("api/v1/users/list", {
+      params,
+    })
+  ).data.data.rows;
+//ZhouYu数据结束
+
+//CaiZhi数据开始
+//简单了解
+export const fetchTask = async (params: {
+  project_id: number;
+  prop_order: string;
+  order: string;
+}) =>
+  (
+    await http.get<foos>("api/v1/task_lists/list", {
+      params,
+    })
+  ).data.data.rows;
+
+//新手引导
+export const Novicedata = async (params: {
+  task_list_id: number;
+  prop_order: string;
+  order: string;
+}) =>
+  (
+    await http.get<Novicepage>("api/v1/tasks/list", {
+      params,
+    })
+  ).data.data.rows;
+
+export const getDataAll = async (params: { limit: number }) =>
+  (
+    await http.get<Novicepage>("api/v1/projects/list?", {
+      params,
+    })
+  ).data.data.rows;
+
+export const taskall = async (params: { id: number }) =>
+  (
+    await http.get<Novicepage>("api/v1/tasks", {
+      params,
+    })
+  ).data.data;
+export const renwu = async (params: { task_id: number }) =>
+  (
+    await http.get<Novicepage>("api/v1/task_logs/list", {
+      params,
+    })
+  ).data.data;
+//CaiZhi数据结束
